@@ -13,7 +13,7 @@ interface IProduct {
   _type: string;
   name: string;
   price: number;
-  image: string; // Adjusted based on Sanity schema
+  image: object; // Adjusted based on Sanity schema
   description: string;
   size: string;
   color: string;
