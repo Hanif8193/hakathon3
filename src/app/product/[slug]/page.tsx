@@ -1,109 +1,55 @@
-"use client";
+
+// Replace with your Sanity Client path
 import { client } from "@/sanity/lib/client";
-import { groq } from "next-sanity";
-import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
-import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import { PortableText } from "@portabletext/react";
 import { Button } from "@/components/ui/button";
 
-
-interface IProduct {
-  _id: string;
-  _type: string;
-  name: string;
-  price: number;
-  image: object; // Adjusted based on Sanity schema
-  description: string;
-  size: string;
-  color: string;
-}
-
-// interface ProductPageProps {
-  // params: { slug: string };
-// }
 type ProductPageProps = {
-  params?: {
+  params: {
     slug: string;
   };
 };
 
+export default async function ProductPage({ params }: ProductPageProps) {
+  const query = `*[_type == "products" && slug.current == $slug][0]{
+    image, 
+    name, 
+    price, 
+    description
+  }`;
 
-async function getProduct(slug: string): Promise<IProduct | null> {
-  return client.fetch(
-    groq`*[_type == "products" && slug.current == $slug][0]{
-        _id,
-        _type,
-        name,
-        price,
-        image,
-        description,
-        size,
-        color
-    }`,
-    { slug }
-  );
-}
-
-
-export default function ProductPage({ params }: ProductPageProps) {
-  const slug = params?.slug;
-  const [product, setProduct] = useState<IProduct | null>(null);
-  const [count,setCount] = useState(0);
-  function increment () {
-    setCount(count + 1);
-  }
- function decrement  () {
-  setCount(count - 1);
- }
-
-  useEffect(() => {
-    if (slug) {
-      const fetchProduct = async () => {
-        const fetchedProduct = await getProduct(slug);
-        setProduct(fetchedProduct);
-      };
-      fetchProduct();
-    }
-  }, [slug]);
-
-  
-  
+  const product = await client.fetch(query, { slug: params.slug });
 
   if (!product) {
-    return <p>Product not found.</p>;
+    return <div className="text-center text-xl mt-10">Product not found</div>;
   }
- 
-  
 
   return (
-    <div className="max-w-10xl mx-auto p-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4 bg-green-100">
+    <div className="p-10 max-w-5xl mx-auto">
+      {product.image && (
         <Image
           src={urlFor(product.image).url()}
-          alt={product.name}
+          alt={product.name || "Product Image"}
           width={800}
-          height={800}
+          height={500}
+          className="w-full rounded-lg shadow-md"
         />
-        <div className="flex flex-col gap-5 items-center ml-5">
-          <h1 className="text-2xl font-bold">{product.name}</h1>
-          <p className="text-2xl font-bold">${product.price}</p>
-          <div className='flex justify-center items-center h-screen gap-5'>
-    <Button onClick={increment} variant={"default"} className='text-2xl rounded-3xl py-6'>Increment</Button>
-     <Button onClick={decrement}variant={"destructive"} className='text-2xl rounded-3xl py-6'>Decrement</Button>
-          
-     <p> count= {count} </p> 
-    
-    </div>
-          <p>{product.description}</p>
-          <button
-            className="bg-black text-white px-10 py-2 rounded-lg hover:cursor-pointer"
-            
-          >
-            ADD TO CART
-          </button>
+      )}
+
+      <div className="mt-6 space-y-4">
+        <h1 className="text-4xl font-bold">{product.name}</h1>
+        <p className="text-2xl font-semibold text-green-600">${product.price}</p>
+
+        <div className="text-gray-700 mt-4">
+          <PortableText value={product.description} />
         </div>
+
+        <Button className="bg-black text-white px-6 py-3 rounded-lg">
+          ADD TO CART
+        </Button>
       </div>
     </div>
   );
 }
-
