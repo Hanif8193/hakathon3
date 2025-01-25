@@ -18,9 +18,15 @@ interface IProduct {
   color: string;
 }
 
-interface ProductPageProps {
-  params: { slug: string };
-}
+// interface ProductPageProps {
+  // params: { slug: string };
+// }
+type ProductPageProps = {
+  params?: {
+    slug: string;
+  };
+};
+
 
 async function getProduct(slug: string): Promise<IProduct | null> {
   return client.fetch(
@@ -40,7 +46,7 @@ async function getProduct(slug: string): Promise<IProduct | null> {
 
 
 export default function ProductPage({ params }: ProductPageProps) {
-  const { slug } = params;
+  const slug = params?.slug;
   const [product, setProduct] = useState<IProduct | null>(null);
   const [count,setCount] = useState(0);
   function increment () {
@@ -51,11 +57,13 @@ export default function ProductPage({ params }: ProductPageProps) {
  }
 
   useEffect(() => {
-    async function fetchProduct() {
-      const fetchedProduct = await getProduct(slug);
-      setProduct(fetchedProduct);
+    if (slug) {
+      const fetchProduct = async () => {
+        const fetchedProduct = await getProduct(slug);
+        setProduct(fetchedProduct);
+      };
+      fetchProduct();
     }
-    fetchProduct();
   }, [slug]);
 
   
