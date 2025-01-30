@@ -25,6 +25,8 @@ export default defineType({
         title: 'Description',
         type: 'text',
         },
+        
+        
         {
         name: 'image',
         title: 'Image',

@@ -1,3 +1,4 @@
+
 import React from "react";
 
 
@@ -10,7 +11,7 @@ function SecLast() {
     
       
         <div>
-          <div className="flex  bg-black text-white font-bold rounded-xl  ">
+          <div className="flex justify-between items-end  bg-black text-white font-bold rounded-xl px-60  ">
             {/* <div className="grid grid-1 sm:grid-cols-5 md:grid-cols-4 lg:grid-cols-4 gap-5 px-10 py-5"> */}
             <div className="flex   ">
               STAY UP TO DATE ABOUT <br />
@@ -29,21 +30,3 @@ function SecLast() {
   )
 }
 export default SecLast 
-     
-     
-
-      
-
-
-
-        
-
-
-
-
-
-
-
-         
-         
-        

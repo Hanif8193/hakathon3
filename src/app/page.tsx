@@ -1,3 +1,4 @@
+
 import { client } from "@/sanity/lib/client";
 import imageUrlBuilder from "@sanity/image-url";
 import Hero from "./components/Hero";
@@ -48,7 +49,8 @@ async function Home() {
             <h2>{product.id}</h2>
             <h2>{product.name}</h2>
             <p>{product.price}</p>
-
+              
+              
             <Link href={`/product/${product.slug.current}`}>
               <p className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Learn More

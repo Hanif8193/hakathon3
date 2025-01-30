@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/navbar";
 import Footer from "./components/Footer";
+import ReduxProvider from '../app/redux/provider'
+import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 
 
 const geistSans = localFont({
@@ -31,9 +33,21 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ClerkProvider>
+      
+        
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          <ReduxProvider>
         <Navbar/>
         {children}
       <Footer/>
+      </ReduxProvider>
+      </ClerkProvider>
       </body>
     </html>
   );
