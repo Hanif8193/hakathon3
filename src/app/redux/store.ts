@@ -1,7 +1,7 @@
 
 "use client"
 import { configureStore } from "@reduxjs/toolkit";
-import cartReducer from "../redux/cartslice";
+import cartReducer from "./cartslice";
 
 const store = configureStore({
   reducer: {
