@@ -1,3 +1,4 @@
+
 "use client";
 // Replace with your Sanity Client path
 import { client } from "@/sanity/lib/client";
