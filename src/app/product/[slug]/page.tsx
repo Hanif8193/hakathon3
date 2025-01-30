@@ -70,9 +70,9 @@ export default function ProductPage({ params }: ProductPageProps) {
       <div className="mt-6 space-y-4">
         <h1 className="text-4xl font-bold">{productState.name}</h1>
         <p className="text-2xl font-semibold text-green-600">${productState.price}</p>
-          <p className="text-xl">{productState.description}</p>
-        <div className="text-gray-700 mt-4">
-        <PortableText value={[{ _type: "block", children: [{ _type: "span", text: productState.description }] }]} />
+          
+        <div className="text-gray-700 mt-4 text-xl">
+        <PortableText  value={[{ _type: "block", children: [{ _type: "span", text: productState.description }] }]} />
           
         </div>
         <button onClick={()=>handleAdd(productState)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
