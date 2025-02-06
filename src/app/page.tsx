@@ -6,6 +6,11 @@ import Center from "./components/Center";
 import SecLast from "./components/SecLast";
 import Image from "next/image";
 import Link from "next/link";
+import StripeCheckOutButton from "./Checkout";
+
+
+
+
 interface IProduct {
   id: string; // Add the id property
   name: string;
@@ -34,6 +39,8 @@ async function Home() {
 
   return (
     <div>
+     
+     <StripeCheckOutButton/>
       <Hero />
       <Center />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">

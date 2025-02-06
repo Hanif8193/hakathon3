@@ -7,16 +7,13 @@ const client = createClient({
   apiVersion: '2025-01-13',
   token: 'skt5QvJ6cdA4nOyXfCQtc7t1WAV08WUDJm98GIS7uRcripiHbSzjWXi9ze7nxLhK6nrmd6JTWpTLoRqvEHvDjvntDT5CiFALtzxNgJzXgwv2IL08tfu6uvYtWyGtls5fjbISK5XovHrBuPXUnGuvIiJJLOMg9HFZxHblQJD0oYDNdwVLpmjp',
 });
-
 async function uploadImageToSanity(imageUrl) {
   try {
     console.log(`Uploading image: ${imageUrl}`);
-
     const response = await fetch(imageUrl);
     if (!response.ok) {
       throw new Error(`Failed to fetch image: ${imageUrl}`);
     }
-
     const buffer = await response.arrayBuffer();
     const bufferImage = Buffer.from(buffer);
 
@@ -31,11 +28,9 @@ async function uploadImageToSanity(imageUrl) {
     return null;
   }
 }
-
 async function uploadProduct(product) {
   try {
     const imageId = await uploadImageToSanity(product.imageUrl);
-
     if (imageId) {
       const document = {
         _type: 'products',
@@ -54,7 +49,6 @@ async function uploadProduct(product) {
         colors: product.colors,
         sizes: product.sizes
       };
-
       const createdProduct = await client.create(document);
       console.log(`Product ${product.name} uploaded successfully:`, createdProduct);
     } else {
